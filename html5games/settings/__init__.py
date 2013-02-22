@@ -1,6 +1,7 @@
-from settings.base import *
+from .base import *
 
 try:
-	from settings.local import *
+	from .dev_settings import *
 except ImportError:
 	pass
+
