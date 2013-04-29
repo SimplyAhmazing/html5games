@@ -123,7 +123,7 @@ TEMPLATE_DIRS = (
     root("..","templates"),
 )
 
-INSTALLED_APPS = (
+DJANGO_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -134,11 +134,24 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+)
 
+MY_APPS = (
+    'adam',
+    'typeahead',
+    'dasdemo',
+    )
+
+THIRDPARTY_APPS = (
     'south',
     'reversion',
     'adam',
-)
+    'ajax_select',
+    )
+
+INSTALLED_APPS = DJANGO_APPS + MY_APPS + THIRDPARTY_APPS
+
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -168,3 +181,19 @@ LOGGING = {
         },
     }
 }
+
+
+# define the lookup channels in use on the site
+
+#from typeahead.models.
+AJAX_LOOKUP_CHANNELS = {
+    #   pass a dict with the model and the field to search against
+    'country'  : {'model':'typeahead.Country', 'search_field':'name'}
+    #   'country' : ('dasdemo.lookups', 'CountryLookup')
+}
+# magically include jqueryUI/js/css
+AJAX_SELECT_BOOTSTRAP = True
+AJAX_SELECT_INLINES = 'inline'
+
+from local_settings import *
+

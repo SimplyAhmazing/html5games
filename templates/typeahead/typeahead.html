@@ -1,0 +1,116 @@
+<html>
+<head>
+	<title>Type Ahead</title>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}typeahead/js/typeahead.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}typeahead/js/jquery.autocomplete.js"></script>
+	<script type="text/javascript">
+
+		$('#countries').typeahead({                                
+		  name: 'name',                                                          
+		  prefetch: '/typeahead/api.json',
+		  remote: 'http://localhost:8000/typeahead/api.json?q=%QUERY',
+		  limit: 10                                                                   
+		});
+
+
+/*
+		$('#countries').typeahead({
+			source: function(typeahead, query) {
+				$.getJSON(
+					'typeahead/api.json', {
+					q: query
+				},
+
+				function(data) {
+					typeahead.process(data);
+				});
+
+
+				property: 'name',
+				onselect: function(obj) {
+					console.log(obj);
+				}
+			});
+		});
+*/
+
+/*
+		$('#countries').typeahead({
+			source: function(typeahead, query) {
+				if (this.ajax_call) this.ajax_call.abort();
+				this.ajax_call = $.ajax({
+					data: {
+						q: query,
+					},
+					url: 'typeahead/api.json',
+					dataType: 'json',
+					success: function(data) {
+						typeahead.process(data);
+					}
+				});
+			},
+			property: 'name',
+			onselect: function(obj) {
+				console.log(obj);
+			}
+		});
+*/
+/*
+		$(document).ready(function() {
+			// use this hash to cache search results
+			window.query_cache = {};
+			$('#search-input').typeahead({
+				source: function(query, process) {
+					// if in cache use cached value, if don't wanto use cache remove this if statement
+					if (query_cache[query]) {
+						process(query_cache[query]);
+						return;
+					}
+					if (typeof searching != "undefined") {
+						clearTimeout(searching);
+						process([]);
+					}
+					searching = setTimeout(function() {
+						return $.getJSON(
+							"typeahead/api.json", {
+							q: query
+						},
+
+						function(data) {
+							// save result to cache, remove next line if you don't want to use cache
+							query_cache[query] = data;
+							// only search if stop typing for 300ms aka fast typers
+							return process(data);
+						});
+					}, 300); // 300 ms
+				}
+			});
+		});
+		*/
+	</script>
+
+	<script type="text/javascript">
+	/*
+		//attach autocomplete
+		$("#autocomplete").autocomplete({
+			serviceUrl: '/typeahead/api3.json',
+
+		});
+		alert("here..");
+		*/
+		
+	</script>
+
+
+</head>
+<body>
+
+	<input id="countries" type="text" class="typeahead example-countries ">
+
+	<input id="autocomplete" type="text">
+
+
+
+</body>
+</html>
