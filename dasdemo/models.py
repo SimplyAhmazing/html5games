@@ -1,12 +1,9 @@
 from django.db import models
 
-from typeahead.models import Country
+#from typeahead.models import Country
 # Create your models here.
 
-class Cars(models.Model):
-	brand = models.CharField(max_length=20)
-	name = models.CharField(max_length=20)
-	country = models.ForeignKey(Country, blank=True, null=True)
+
 
 class Country(models.Model):
 	short = models.CharField(max_length=5)
@@ -17,3 +14,8 @@ class Country(models.Model):
 
 	def __unicode__(self):
 		return "%s" % self.name
+
+class Cars(models.Model):
+	brand = models.CharField(max_length=20)
+	name = models.CharField(max_length=20)
+	country = models.ForeignKey(Country, blank=True, null=True)
