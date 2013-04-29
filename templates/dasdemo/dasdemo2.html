@@ -1,0 +1,17 @@
+<html>
+<head>
+	<title>django-ajax-selects demo</title>
+</head>
+<body>
+	<form action="" method="post">
+		{% if form.errors %}
+			{{form.errors}}
+		{% endif %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        {% csrf_token %}
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

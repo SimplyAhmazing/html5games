@@ -188,8 +188,8 @@ LOGGING = {
 #from typeahead.models.
 AJAX_LOOKUP_CHANNELS = {
     #   pass a dict with the model and the field to search against
-    'country'  : {'model':'dasdemo.Country', 'search_field':'name'}
-    #   'country' : ('dasdemo.lookups', 'CountryLookup')
+    'country'  : {'model':'dasdemo.Country', 'search_field':'name'},
+    'custom_country' : ('dasdemo.lookups', 'CountryLookup'),
 }
 # magically include jqueryUI/js/css
 AJAX_SELECT_BOOTSTRAP = True

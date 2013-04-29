@@ -5,8 +5,7 @@ from django.utils import simplejson as json
 
 from models import Country, Cars
 
-from form import CarForm
-from django.forms.models import inlineformset_factory
+from form import CarForm, CarForm2
 
 def main(request):
 	return HttpResponse("booo")
@@ -18,19 +17,35 @@ def demo(request):
 		context = {"form": our_form}
 		return render(request, "dasdemo/dasdemo.html", context)
 	else:
-		#CarInlineFormset = inlineformset_factory(Cars, Country, form = CarForm)
+
 		get_form = CarForm(request.POST)
 		
 
 
-		import pdb; pdb.set_trace()
+		#import pdb; pdb.set_trace()
 		if get_form.is_valid():
 			#import pdb; pdb.set_trace()
 			get_form.save()
-			
 
-			#form.country = Country.object.get(pk = request.POST.get('country'))
-			#fixed_form.save()
 			return HttpResponse("thanks!!")
 		else:
 			return render(request, "dasdemo/dasdemo.html", context)
+
+def demo2(request):
+
+	if request.method == 'GET':
+		our_form = CarForm2()
+		context = {"form": our_form}
+		return render(request, "dasdemo/dasdemo2.html", context)
+	else:
+
+		get_form = CarForm2(request.POST)
+
+		#import pdb; pdb.set_trace()
+		if get_form.is_valid():
+			#import pdb; pdb.set_trace()
+			get_form.save()
+
+			return HttpResponse("thanks!!")
+		else:
+			return render(request, "dasdemo/dasdemo2.html", context)

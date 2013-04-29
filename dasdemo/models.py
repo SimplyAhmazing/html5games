@@ -19,3 +19,9 @@ class Cars(models.Model):
 	brand = models.CharField(max_length=20)
 	name = models.CharField(max_length=20)
 	country = models.ForeignKey(Country, blank=True, null=True)
+
+	def __str__(self):
+		return "%s" % self.name
+
+	def __unicode__(self):
+		return "%s" % self.name

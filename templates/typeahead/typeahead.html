@@ -4,59 +4,60 @@
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}typeahead/js/typeahead.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}typeahead/js/jquery.autocomplete.js"></script>
-	<script type="text/javascript">
 
+	<script type="text/javascript">
+	/*
 		$('#countries').typeahead({                                
 		  name: 'name',                                                          
 		  prefetch: '/typeahead/api.json',
 		  remote: 'http://localhost:8000/typeahead/api.json?q=%QUERY',
 		  limit: 10                                                                   
 		});
+	*/
+
+	/*
+			$('#countries').typeahead({
+				source: function(typeahead, query) {
+					$.getJSON(
+						'typeahead/api.json', {
+						q: query
+					},
+
+					function(data) {
+						typeahead.process(data);
+					});
 
 
-/*
-		$('#countries').typeahead({
-			source: function(typeahead, query) {
-				$.getJSON(
-					'typeahead/api.json', {
-					q: query
-				},
-
-				function(data) {
-					typeahead.process(data);
+					property: 'name',
+					onselect: function(obj) {
+						console.log(obj);
+					}
 				});
+			});
+	*/
 
-
+	/*
+			$('#countries').typeahead({
+				source: function(typeahead, query) {
+					if (this.ajax_call) this.ajax_call.abort();
+					this.ajax_call = $.ajax({
+						data: {
+							q: query,
+						},
+						url: 'typeahead/api.json',
+						dataType: 'json',
+						success: function(data) {
+							typeahead.process(data);
+						}
+					});
+				},
 				property: 'name',
 				onselect: function(obj) {
 					console.log(obj);
 				}
 			});
-		});
-*/
-
-/*
-		$('#countries').typeahead({
-			source: function(typeahead, query) {
-				if (this.ajax_call) this.ajax_call.abort();
-				this.ajax_call = $.ajax({
-					data: {
-						q: query,
-					},
-					url: 'typeahead/api.json',
-					dataType: 'json',
-					success: function(data) {
-						typeahead.process(data);
-					}
-				});
-			},
-			property: 'name',
-			onselect: function(obj) {
-				console.log(obj);
-			}
-		});
-*/
-/*
+	*/
+	/*
 		$(document).ready(function() {
 			// use this hash to cache search results
 			window.query_cache = {};
@@ -87,18 +88,19 @@
 				}
 			});
 		});
-		*/
+	*/
 	</script>
 
 	<script type="text/javascript">
-	/*
+	$(document).ready(function(){
 		//attach autocomplete
 		$("#autocomplete").autocomplete({
-			serviceUrl: '/typeahead/api3.json',
+			serviceUrl: 'http://localhost:8000/typeahead/api3',
 
 		});
-		alert("here..");
-		*/
+	});
+		
+		
 		
 	</script>
 

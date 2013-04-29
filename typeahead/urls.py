@@ -6,6 +6,6 @@ urlpatterns = patterns('',
 
 	url(r'^api.json/$', api),
 	url(r'^api2.json/$', api2),
-	url(r'^api3.json/$', api3),
+	url(r'^api3$', api3),
     url(r'^$', main, name = "main"),
 )

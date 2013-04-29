@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.utils import simplejson as json
 from django.db.models import Q
 
-from models import Country
+from dasdemo.models import Country
 
 
 def main(request):
@@ -33,35 +33,36 @@ def api2(request):
 	
 	
 	if data:
-		return HttpResponse(json.dumps(data), mimetype="application/json")
+		return HttpResponse(json.dumps(data), mimetype = 'application/json')
 	else:
-		return HttpResponse(json.dumps(res), mimetype="application/json")
+		return HttpResponse(json.dumps(res), mimetype = 'application/json')
 
 
 def api3(request):
-	qry  =  request.GET.get('q')
+	qry  =  request.GET.get('query')
 	res = {"stat": "error"}
 	data ={}
+	suggestions = []
 
 	if qry:
-		res = Country.objects.filter(name__istartswith = qry).values('id','name')
-		res = list(res)
-		
-		new_res = []
+		res = Country.objects.filter(name__istartswith = qry)
 		
 		
-		for i in range(len(res)):
+		
+		
+		for country in res:
 			temp = {}
-			temp['value'] = res[i]['name']
-			temp['data'] = res[i]['id']
-			new_res.append(temp)
+			temp['id'] = country.id
+			temp['value'] = country.name #res[i]['name']
+			temp['data'] = country.name #res[i]['id']
+			suggestions.append(temp)
 
 		data['query'] = qry
-		data['suggestions'] = new_res
+		data['suggestions'] = suggestions
 
 	
 	
 	if data:
-		return HttpResponse(json.dumps(data), mimetype="application/json")
+		return HttpResponse(json.dumps(data), mimetype = 'application/json')
 	else:
-		return HttpResponse(json.dumps(res), mimetype="application/json")
+		return HttpResponse(json.dumps(res), mimetype = 'application/json')

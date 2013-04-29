@@ -13,4 +13,12 @@ class CarForm(forms.ModelForm):
 	class Meta:
 		model = Cars
 
-	
+
+class CarForm2(forms.ModelForm):
+
+	brand = forms.CharField()
+	name = forms.CharField()
+	country = make_ajax_field(Cars, 'country', 'custom_country')
+
+	class Meta:
+		model = Cars
