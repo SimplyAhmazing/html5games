@@ -1,0 +1,99 @@
+<html>
+<head>
+	<title>Type Ahead</title>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+	<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet" />
+	<script src="//underscorejs.org/underscore-min.js"></script>
+
+	<script type="text/javascript">
+	$(document).ready(function(){
+
+		$('#countries').typeahead({
+			
+			source: function(query, process){
+				searchCountries(query, process)
+			},
+
+			matcher: function(item){
+				return true;
+			},
+
+			updater: function(item){
+				//save the id value into the hidden field
+				$('#userId').val(countries[item.id]);
+
+				//return the string you want to go into the text box (e.g. name)
+				return item;
+			},
+
+			highlighter: function(item){
+				var p = countries[item];
+				var itm = ''
+						 + "<div class='typeahead_wrapper'>"
+						 + "<img class='typeahead_photo' src='" + p.photo + "' />"
+						 + "<div class='typeahead_labels'>"
+						 + "<div class='typeahead_primary'>" + p.name + "</div>"
+						 + "<div class='typeahead_secondary'>" + p.id + "</div>"
+						 + "</div>"
+						 + "</div>";
+				return itm;
+			}
+
+		});
+
+
+
+	});
+
+	var searchCountries = _.debounce(function(query, process){
+		$.get('/typeahead/api4.json', { q: query }, function(data){
+					
+			//reset containers
+			countries = {};
+			countryNames = []
+
+			_.each(data, function(item, ix, list){
+				if(_.contains(countries, item.name)){
+					item.name = item.name + '#' + item.id;
+				}
+
+				//add the name to the display array
+				countryNames.push(item.name);
+
+				//also store a mapping to get from name back to ID
+				countries[item.name] = {
+					id: item.id,
+					name: item.name,
+					photo: item.img,
+				}
+			});
+
+			//return the display array
+			process(countryNames)
+
+		});
+	}, 300);
+	</script>
+
+
+
+
+</head>
+<body>
+
+	<input id="countries" type="text" data-provide="typeahead" class="typeahead example-countries" autocomplete="off">
+
+	<input id="userId" type="hidden" value="">
+
+
+	<style type="text/css">
+		.typeahead_wrapper { display: block; height: 30px; }
+		.typeahead_photo { float: left; max-width: 30px; max-height: 30px; margin-right: 5px; }
+		.typeahead_labels { float: left; height: 30px; }
+		.typeahead_primary { font-weight: bold; }
+		.typeahead_secondary { font-size: .8em; margin-top: -5px; }
+	</style>
+</body>
+
+</html>

@@ -2,9 +2,58 @@
 <head>
 	<title>Type Ahead</title>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-	<script type="text/javascript" src="{{STATIC_URL}}typeahead/js/typeahead.js"></script>
+	<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet" />
 	<script type="text/javascript" src="{{STATIC_URL}}typeahead/js/jquery.autocomplete.js"></script>
+	<script src="//underscorejs.org/underscore-min.js"></script>
 
+	<script type="text/javascript">
+	$(document).ready(function(){
+
+		$('#countries').typeahead({
+			source: function(query, process){
+				$.get('/typeahead/api.json', { q: query }, function(data){
+					var results = _.map(data, function(dat){
+						return dat.name;
+					});
+					process(results)
+				});
+			},
+
+			highlighter: function(item){
+				return "==>" + item + "<=="
+			}
+
+		});
+
+
+
+	});
+	</script>
+
+
+
+
+</head>
+<body>
+
+	<input id="countries" type="text" data-provide="typeahead" class="typeahead example-countries" autocomplete="off">
+
+	<!--<input id="autocomplete" type="text">-->
+
+
+
+</body>
+
+	<script type="text/javascript">
+	$(document).ready(function(){
+		//attach autocomplete
+		$("#autocomplete").autocomplete({
+			serviceUrl: 'http://localhost:8000/typeahead/api3',
+
+		});
+	});
+	</script>
 	<script type="text/javascript">
 	/*
 		$('#countries').typeahead({                                
@@ -90,29 +139,4 @@
 		});
 	*/
 	</script>
-
-	<script type="text/javascript">
-	$(document).ready(function(){
-		//attach autocomplete
-		$("#autocomplete").autocomplete({
-			serviceUrl: 'http://localhost:8000/typeahead/api3',
-
-		});
-	});
-		
-		
-		
-	</script>
-
-
-</head>
-<body>
-
-	<input id="countries" type="text" class="typeahead example-countries ">
-
-	<input id="autocomplete" type="text">
-
-
-
-</body>
 </html>

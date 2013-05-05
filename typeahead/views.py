@@ -10,6 +10,9 @@ from dasdemo.models import Country
 def main(request):
 	return render(request, "typeahead/typeahead.html")
 
+def main2(request):
+	return render(request, "typeahead/typeahead2.html")
+
 def api(request):
 	qry  =  request.GET.get('q')
 	res = {"stat": "error"}
@@ -18,6 +21,27 @@ def api(request):
 		res = list(res)
 	
 	return HttpResponse(json.dumps(res), mimetype="application/json")
+
+def api4(request):
+	qry  =  request.GET.get('q')
+	err = {"stat": "error"}
+	data ={}
+	suggestions = []
+
+	if qry:
+		res = Country.objects.filter(name__istartswith = qry)
+
+		for country in res:
+			temp = {}
+			temp['id'] = country.id
+			temp['name'] = country.name
+			temp['img'] = 'http://localhost:8000/static/flags/' + country.short + '.png'
+			suggestions.append(temp)
+
+	if suggestions:
+		return HttpResponse(json.dumps(suggestions), mimetype = 'application/json')
+	else:
+		return HttpResponse(json.dumps(err), mimetype = 'application/json')
 
 
 def api2(request):

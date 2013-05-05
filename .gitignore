@@ -1,5 +1,4 @@
 *.pyc
-static
 html5games/settings/dev_settings.py
 dev_settings.py
 
