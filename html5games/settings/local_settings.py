@@ -1,4 +1,3 @@
-
 import os
 # here() gives us file paths from the root of the system to the directory
 # holding the current file.
@@ -20,8 +19,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'html5games',
-        'USER': 'postgres',
-        'PASSWORD': '123456',
+        'USER': 'myuser',
+        'PASSWORD': 'mypassword',
     }
 }
 
