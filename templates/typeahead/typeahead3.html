@@ -1,0 +1,60 @@
+<html>
+<head>
+	<title>Type Ahead</title>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+	<!--<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>-->
+	<!--<script src="{{STATIC_URL}}/typeahead/js/typeahead.js"></script>-->
+	
+	<script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.js"></script>
+	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet" />
+
+	<script src="http://twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js"></script>
+
+	<script src="//underscorejs.org/underscore-min.js"></script>
+
+
+
+</head>
+<body>
+
+	<input id="countries" type="text" data-provide="typeahead" class="typeahead example-countries" autocomplete="off">
+
+	<input id="userId" type="hidden" value="">
+
+
+	<style type="text/css">
+		.typeahead_wrapper { display: block; height: 30px; }
+		.typeahead_photo { float: left; max-width: 30px; max-height: 30px; margin-right: 5px; }
+		.typeahead_labels { float: left; height: 30px; }
+		.typeahead_primary { font-weight: bold; }
+		.typeahead_secondary { font-size: .8em; margin-top: -5px; }
+	</style>
+	<script type="text/javascript">
+	
+		$('#countries').typeahead([
+		  {
+		    name: 'countries',
+		    remote: 'http://localhost:8000/typeahead/%QUERY.json',
+		    template: '<div class="typeahead_wrapper">'
+						  + '{{value}}'
+						+ '</div>',
+		    engine: Hogan,
+		    header: "<h3>North America</h3>",
+		    limit: 3,
+		  },
+		  {
+		    name: 'countries2',
+		    remote: 'http://localhost:8000/typeahead/%QUERY.json',
+		     template: [                                                                 
+			    '<div class="typeahead_wrapper">{{value}}</div>',                              
+			    '<div class="typeahead_primary"></div>',                                                              
+			  ].join(''), 
+		    engine: Hogan,
+		    header: "<h3>Asia</h3>",
+		    limit: 3,
+		  },
+		]);
+	</script>
+</body>
+
+</html>

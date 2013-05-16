@@ -13,6 +13,9 @@ def main(request):
 def main2(request):
 	return render(request, "typeahead/typeahead2.html")
 
+def main3(request):
+	return render(request, "typeahead/typeahead3.html")
+
 def api(request):
 	qry  =  request.GET.get('q')
 	res = {"stat": "error"}
@@ -90,3 +93,31 @@ def api3(request):
 		return HttpResponse(json.dumps(data), mimetype = 'application/json')
 	else:
 		return HttpResponse(json.dumps(res), mimetype = 'application/json')
+
+
+def headings_api(request, qry=""):
+
+	err = {"stat": "error"}
+	data ={}
+	suggestions = []
+
+	if qry:
+		#return HttpResponse("yes")
+
+		res = Country.objects.filter(name__istartswith = qry)
+
+		for country in res:
+			temp = {}
+			temp['id'] = country.id
+			temp['value'] = country.name + ' ' + qry
+			temp['tokens'] = [country.name]
+			temp['img'] = 'http://localhost:8000/static/flags/' + country.short + '.png'
+			suggestions.append(temp)
+
+	if suggestions:
+		return HttpResponse(json.dumps(suggestions), mimetype = 'application/json')
+	else:
+		return HttpResponse(json.dumps(err), mimetype = 'application/json')
+
+
+	
