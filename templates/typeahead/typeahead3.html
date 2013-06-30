@@ -5,9 +5,11 @@
 	<!--<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>-->
 	<!--<script src="{{STATIC_URL}}/typeahead/js/typeahead.js"></script>-->
 	
-	<script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.js"></script>
+	
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet" />
 
+
+	<script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.js"></script>
 	<script src="http://twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js"></script>
 
 	<script src="//underscorejs.org/underscore-min.js"></script>
@@ -35,13 +37,15 @@
 		  {
 		    name: 'countries',
 		    remote: 'http://localhost:8000/typeahead/%QUERY.json',
-		    template: '<div class="typeahead_wrapper">'
+		    template: '<div class="typeahead_wrapper" sytle="background-color: black;">'
 						  + '{{value}}'
+						  + '{{img}}'
 						+ '</div>',
 		    engine: Hogan,
 		    header: "<h3>North America</h3>",
 		    limit: 3,
 		  },
+
 		  {
 		    name: 'countries2',
 		    remote: 'http://localhost:8000/typeahead/%QUERY.json',

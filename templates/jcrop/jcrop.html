@@ -1,0 +1,57 @@
+<html>
+<head>
+	<title>Jcrop Feature</title>
+	<script type="text/javascript" src="{{STATIC_URL}}jcrop/js/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}jcrop/css/jquery.Jcrop.css">
+</head>
+<body>
+
+	<img id="target" class="cropable" src="http://pic.wallpapermurals.co.uk/gallery/nordic-forest-wall-mural.jpg">
+
+	<form method="post">
+		 {% csrf_token %}
+		<input type="hidden" name="image" id="image">
+		<input type="hidden" id="x" name="x" value="">
+		<input type="hidden" id="y" name="y" value="">
+		<input type="hidden" id="width" name="width" value="">
+		<input type="hidden" id="height" name="height" value="">
+		<input type="submit" value="Crop">
+		<button type=button onClick="cancelCrop()" >Cancel</button>
+	</form>
+	
+	<script src="{{STATIC_URL}}jcrop/js/jquery.Jcrop.js" type="text/javascript" charset="utf-8" defer></script>
+	<script type="text/javascript">
+		width = $('.cropable').width();
+		height = $('.cropable').height();
+		var jcrop_api;
+
+		$(window).ready(function  () {
+			$('#image').val($('#target').attr('src'));			
+
+			$('#target').Jcrop({
+				aspectRatio: 16/9,
+				setSelect: [0, 0, width, height],
+				onSelect: updateCoords,
+				onChange: updateCoords,
+			
+			}, function(){
+				jcrop_api = this;
+			});
+		});
+
+		function updateCoords(c){
+			$('#x').val(Math.floor(c.x));
+			$('#y').val(Math.floor(c.y));
+			$('#width').val(Math.floor(c.w));
+			$('#height').val(Math.floor(c.h));
+		}
+
+		function cancelCrop(){
+			jcrop_api.release();
+		}
+		
+		
+	</script>
+</body>
+
+</html>

@@ -19,8 +19,9 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/lookups/', include(ajax_select_urls)),
     url(r'^admin/', include(admin.site.urls)),
-
+    
     url(r'^dasdemo/', include('dasdemo.urls')),
     url(r'^typeahead/', include('typeahead.urls')),
     url(r'^adam/', include('adam.urls')),
+    url(r'^jcrop/', include('jcrop.urls')),
 )
